@@ -85,9 +85,9 @@ async def alias_task(mqtt_client, sound, topic, value):
     await mqtt_client.subscribe(topic)
     async with mqtt_client.filtered_messages(topic) as msgs:
         async for msg in msgs:
-            if value is not None and value != msg.payload.decode():
+            if value != '*' and value != msg.payload.decode():
                 continue
-            await try_play_sound(msg.payload.decode())
+            await try_play_sound(sound)
 
 
 async def main():
