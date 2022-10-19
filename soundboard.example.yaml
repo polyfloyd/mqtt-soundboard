@@ -1,0 +1,19 @@
+loglevel: INFO
+
+mqtt:
+  host: mqtt.bitlair.nl
+
+sounds:
+  directory: ./sounds
+  play_cmd: "mpv %s"
+  topic: bitlair/soundboard
+
+aliases:
+  - sound: space_open
+    topic: bitlair/state
+    value: open
+  - sound: space_close
+    topic: bitlair/state
+    value: close
+  - sound: doorbell
+    topic: bitlair/doorduino/doorbell
