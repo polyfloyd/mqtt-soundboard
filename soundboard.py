@@ -7,8 +7,9 @@ import sys
 import yaml
 import aiofiles
 import aiofiles.os as os
-from os.path import basename, join
+from os.path import join
 import random
+import re
 
 logging.basicConfig()
 logger = logging.getLogger('soundboard')
@@ -74,7 +75,9 @@ async def main_task(mqtt_client, topic):
             sound = msg.payload.decode()
             if sound == '':
                 continue
-            sound = basename(sound) # shitty path traversal protection
+            if not re.match('^[a-zA-Z0-9]+$', sound):
+                logger.debug(f'drop {sound}: regex test failed')
+                continue
             await try_play_sound(sound)
 
 
